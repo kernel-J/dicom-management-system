@@ -1,4 +1,4 @@
-module ImageManagementService
+module dicom_management_service
 
 go 1.23
 

@@ -6,7 +6,8 @@ import (
 )
 
 type Config struct {
-	Port     string
+	Port     	string
+	UploadDir	string
 }
 
 func New() *Config {
@@ -15,6 +16,8 @@ func New() *Config {
 		port = "8080"
 	}
 
+	upload_dir := os.Getenv("UPLOAD_DIR")
+
 	// database := os.Getenv("DATABASE_URL")
 	// if database == "" {
 	// 	database = "postgres://user:password@localhost:5432/mydatabase"
@@ -22,6 +25,7 @@ func New() *Config {
 
 	return &Config{
 		Port:     port,
+		UploadDir: upload_dir,
 	}
 }
 

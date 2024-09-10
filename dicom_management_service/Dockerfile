@@ -8,8 +8,8 @@ RUN go mod download
 
 COPY . .
 
-RUN CGO_ENABLED=0 GOOS=linux go build -o /image-management-service
+RUN CGO_ENABLED=0 GOOS=linux go build -o /dicom-management-service
 
 EXPOSE 8080
 
-CMD ["/image-management-service"]
+CMD ["/dicom-management-service"]

@@ -7,7 +7,7 @@ import (
 	"os/signal"
 	"time"
 
-	"ImageManagementService/config"
+	"dicom_management_service/config"
 	"log"
 )
 
@@ -21,12 +21,10 @@ func NewServer(config *config.Config) *Server {
 	}
 }
 
-func (s *Server) Run() {
-	routes := RegisterRoutes()
-
+func (s *Server) Run(mux *http.ServeMux) {
 	srv := &http.Server{
 		Addr:    ":" + s.config.Port,
-		Handler: routes,
+		Handler: mux,
 	}
 
 	go func() {

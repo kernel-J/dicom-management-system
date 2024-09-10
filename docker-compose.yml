@@ -1,19 +1,20 @@
 version: "3.8"
 
 services:
-  image-management-service:
-    image: ims:latest
-    container_name: image-management-service
-    ports:
-      - 3000:3000
+  dicom-management-service:
+    image: dicom:latest
+    container_name: dicom-management-service
     build:
-      context: ./ImageManagementService
+      context: ./dicom_management_service
       dockerfile: Dockerfile
     ports:
       - "8080:8080"
     environment:
       - PORT=8080
+      - UPLOAD_DIR=/uploads
+    volumes:
+      - dicom_uploads:/uploads
 
-networks:
-  default:
-    driver: bridge
+volumes:
+  dicom_uploads:
+    driver: local
