@@ -6,9 +6,11 @@ import (
 	"os"
 	"os/signal"
 	"time"
+	"log"
+
+	"github.com/gorilla/mux"
 
 	"dicom_management_service/config"
-	"log"
 )
 
 type Server struct {
@@ -21,7 +23,7 @@ func NewServer(config *config.Config) *Server {
 	}
 }
 
-func (s *Server) Run(mux *http.ServeMux) {
+func (s *Server) Run(mux *mux.Router) {
 	srv := &http.Server{
 		Addr:    ":" + s.config.Port,
 		Handler: mux,

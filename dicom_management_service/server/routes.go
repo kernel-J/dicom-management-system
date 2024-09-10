@@ -1,14 +1,17 @@
 package server
 
 import (
-	"net/http"
+	"github.com/gorilla/mux"
+
 	"dicom_management_service/handlers"
 )
 
-func RegisterRoutes(handler *handlers.DICOMHandler) *http.ServeMux {
-	mux := http.NewServeMux()
+func RegisterRoutes(handler *handlers.DICOMHandler) *mux.Router {
+	router := mux.NewRouter()
 
-	mux.HandleFunc("/upload", handler.UploadDICOM)
+	router.HandleFunc("/upload", handler.UploadDICOM).Methods("POST")
+	router.HandleFunc("/dicom/{id}/{tag}", handler.GetDICOMAttributes).Methods("GET")
+	router.HandleFunc("/jpeg/{id}", handler.GetDICOM).Methods("GET")
 
-	return mux
+	return router
 }
