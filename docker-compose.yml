@@ -15,6 +15,16 @@ services:
     volumes:
       - dicom_uploads:/uploads
 
+  test:
+    image: dicom:latest
+    container_name: dicom-management-service-test
+    build:
+      context: ./dicom_management_service
+      dockerfile: Dockerfile
+    command: go test -v ./...
+    profiles:
+      - test
+
 volumes:
   dicom_uploads:
     driver: local
