@@ -11,7 +11,7 @@ func RegisterRoutes(handler *handlers.DICOMHandler) *mux.Router {
 
 	router.HandleFunc("/upload", handler.UploadDICOM).Methods("POST")
 	router.HandleFunc("/dicom/{id}/{tag}", handler.GetDICOMAttributes).Methods("GET")
-	router.HandleFunc("/jpeg/{id}", handler.GetDICOM).Methods("GET")
+	router.HandleFunc("/convert/{id}", handler.ConvertDICOM).Methods("GET")
 
 	return router
 }

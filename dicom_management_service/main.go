@@ -3,6 +3,7 @@ package main
 import (
 	"log"
 	"os"
+	"github.com/google/uuid"
 
 	"dicom_management_service/config"
 	"dicom_management_service/server"
@@ -19,7 +20,9 @@ func main() {
 		os.Mkdir(cfg.UploadDir, os.ModePerm)
 	}
 
-	dicomService := services.NewDICOMService(cfg.UploadDir)
+	UUIDGenerator := uuid.NewRandom
+	fileStorageService := services.NewFileStorageService(cfg.UploadDir)
+	dicomService := services.NewDICOMService(cfg.UploadDir, fileStorageService, UUIDGenerator)
 	dicomHandler := handlers.NewDICOMHandler(dicomService)
 
 	srv := server.NewServer(cfg)

@@ -3,11 +3,7 @@ package handlers
 import (
     "encoding/json"
     "fmt"
-    // "io/ioutil"
-    // "mime/multipart"
     "net/http"
-    // "os"
-    // "path/filepath"
     
     "github.com/gorilla/mux"
     "github.com/suyashkumar/dicom"
@@ -17,7 +13,7 @@ import (
 )
 
 type DICOMHandler struct {
-    Service *services.DICOMService
+    Service services.DICOMService
 }
 
 type DICOMElement struct {
@@ -26,7 +22,7 @@ type DICOMElement struct {
     Element dicom.Element
 }
 
-func NewDICOMHandler(service *services.DICOMService) *DICOMHandler {
+func NewDICOMHandler(service services.DICOMService) *DICOMHandler {
     return &DICOMHandler{
         Service: service,
     }
@@ -54,7 +50,6 @@ func (h *DICOMHandler) GetDICOMAttributes(w http.ResponseWriter, r *http.Request
     id := vars["id"]
     tag := vars["tag"]
 
-    fmt.Println("id = %s", id)
     if id == "" || tag == "" {
         http.Error(w, "Missing id or tag query parameter", http.StatusBadRequest)
         return
@@ -70,7 +65,7 @@ func (h *DICOMHandler) GetDICOMAttributes(w http.ResponseWriter, r *http.Request
     json.NewEncoder(w).Encode(ret)
 }
 
-func (h *DICOMHandler) GetDICOM(w http.ResponseWriter, r *http.Request) {
+func (h *DICOMHandler) ConvertDICOM(w http.ResponseWriter, r *http.Request) {
     vars := mux.Vars(r)
     id := vars["id"]
 
@@ -79,7 +74,7 @@ func (h *DICOMHandler) GetDICOM(w http.ResponseWriter, r *http.Request) {
         return
     }
 
-    pngPath, err := h.Service.GetDICOM(id)
+    pngPath, err := h.Service.ConvertDICOMToPNG(id)
     if err != nil {
         http.Error(w, "Failed to convert to PNG", http.StatusInternalServerError)
         return
