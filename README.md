@@ -23,12 +23,14 @@ docker compose up dicom-management-service
 
 ## Usage
 To upload a DICOM file
+
 _This gives back a `{file id}.dcm` in the a response_
 ```Bash
 curl -X POST -F "file=@path-to-file" http://localhost:8080/upload 
 ```
 
 To extract attributes of a DICOM file
+
 `tag` should be in the format format (XXXX,XXXX)
 ```Bash
 curl http://localhost:8080/dicom/{file id}/{tag}
